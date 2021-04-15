@@ -9,3 +9,7 @@ Programacion 2
 
 LINK-> https://meet.google.com/zuy-xudh-pay
 
+Redes y Comunicacion
+
+LINK -> https://meet.google.com/pav-owtx-fqj
+
