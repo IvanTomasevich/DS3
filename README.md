@@ -13,3 +13,7 @@ Redes y Comunicacion
 
 LINK -> https://meet.google.com/pav-owtx-fqj
 
+Base de datos 2
+
+LINK -> https://meet.google.com/nne-qtzv-kzp
+
