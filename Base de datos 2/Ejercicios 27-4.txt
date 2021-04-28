@@ -1,0 +1,40 @@
+1 - 
+	INSERT INTO ciclistas (nombre, edad, equipo)
+	VALUES ('Nicolas Diaz', 24, 'Lotus Festina'),('Sabrina Jaime', 17, 'Mapei-Clas');
+	
+4 -
+	SELECT * FROM ciclistas;
+	
+5 -
+	SELECT numero,nombre FROM ciclistas order by nombre;
+	
+6 -
+	SELECT nombre FROM ciclistas WHERE numero = 19;
+	
+7 -
+	SELECT nombre,numero FROM ciclistas WHERE edad > 30;
+	
+8 - 
+	SELECT * FROM ciclistas WHERE equipo = 'Mercatone Uno';
+	
+9 - 
+	SELECT numero,nombre FROM ciclistas WHERE nombre LIKE 'Angel%';
+	
+10-
+	SELECT * FROM equipos;
+	
+11-
+	SELECT * FROM ciclistas WHERE equipo = 'Banesto' AND edad < 30;
+	
+12-
+	SELECT director FROM equipos WHERE nombre_equipo = 'Banesto';
+	
+13-
+	SELECT * FROM etapas;
+	
+14-
+	UPDATE etapas SET llegada = 'Estacion de Cerler' WHERE numero_etapa = 11;
+	
+15-
+	SELECT COUNT(*) FROM etapas WHERE kms > 40;
+	
