@@ -7,3 +7,6 @@ Contacto -> fabivillar2002@gmail.com
 Docker hub packet tracer
 https://hub.docker.com/r/packettracer/centos/tags?page=1&ordering=last_updated
 
+15/4
+https://youtu.be/xGwut8xEdB4
+
