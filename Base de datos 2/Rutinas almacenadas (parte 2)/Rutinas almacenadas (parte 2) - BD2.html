@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<!-- saved from url=(0047)https://juansemarquez.com/reveal/sp-2.html#/5/3 -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+    
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>Rutinas almacenadas (parte 2) - BD2</title>
+
+		<link rel="stylesheet" href="./Rutinas almacenadas (parte 2) - BD2_files/reset.css">
+		<link rel="stylesheet" href="./Rutinas almacenadas (parte 2) - BD2_files/reveal.css">
+		<link rel="stylesheet" href="./Rutinas almacenadas (parte 2) - BD2_files/sky.css">
+
+		<!-- Theme used for syntax highlighting of code -->
+		<link rel="stylesheet" href="./Rutinas almacenadas (parte 2) - BD2_files/monokai.css">
+
+		<!-- Printing and PDF exports -->
+		<script>
+			var link = document.createElement( 'link' );
+			link.rel = 'stylesheet';
+			link.type = 'text/css';
+			link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+			document.getElementsByTagName( 'head' )[0].appendChild( link );
+		</script><link rel="stylesheet" type="text/css" href="./Rutinas almacenadas (parte 2) - BD2_files/paper.css"><script type="text/javascript" src="./Rutinas almacenadas (parte 2) - BD2_files/marked.js.descarga"></script><script type="text/javascript" src="./Rutinas almacenadas (parte 2) - BD2_files/markdown.js.descarga"></script><script type="text/javascript" src="./Rutinas almacenadas (parte 2) - BD2_files/notes.js.descarga"></script><script type="text/javascript" src="./Rutinas almacenadas (parte 2) - BD2_files/highlight.js.descarga"></script>
+	<style type="text/css">.hljs-ln{border-collapse:collapse}.hljs-ln td{padding:0}.hljs-ln-n:before{content:attr(data-line-number)}</style></head>
+	<body>
+		<div class="reveal slide center has-vertical-slides has-horizontal-slides ready" role="application" data-transition-speed="default" data-background-transition="fade" style="">
+			<div class="slides" style="width: 960px; height: 700px; zoom: 1.00389;">
+				<section class="past" style="top: 0px; display: none;" hidden="" aria-hidden="true">
+                <h2>Rutinas almacenadas</h2>
+                <p>(2ª parte)</p>
+                <p><small>Bases de Datos II - 3º2ª DS<br>
+                Prof. Ing. Juan Marquez</small></p>
+                <img src="./Rutinas almacenadas (parte 2) - BD2_files/daVinci.jpg" alt="Máquinas de Da Vinci" style="border: none;">
+                </section>
+
+                <section class="past" style="top: 45px; display: none;" hidden="" aria-hidden="true">
+                   Hay cuatro tipos de rutinas almacenadas:
+                    <ul>
+                        <li><strong>Funciones</strong>: Se pueden invocar desde 
+                            cualquier query.</li>
+                        <li><strong>Procedimientos</strong>: Se pueden invocar 
+                            desde cualquier aplicación que tenga acceso a la BD.</li>
+                        <li><strong>Disparadores (triggers)</strong>: Se ejecutan automáticamente
+                            después de haberse ejecutado un INSERT, UPDATE o
+                            DELETE a una cierta tabla</li>
+                        <li><strong>Eventos</strong>: Se ejecutan automáticamente en un momento
+                            agendado.</li>
+                    </ul>
+                   En esta clase, nos ocuparemos de los dos últimos
+                </section>
+                <section class="past" style="top: 141.5px; display: none;" hidden="" aria-hidden="true">
+                    <h2>Tablas de ejemplo</h2>
+                    <img src="./Rutinas almacenadas (parte 2) - BD2_files/ciclismo_con_fn.png" alt"der="" de="" la="" bd"="">
+                </section>
+                 <section class="stack past" style="top: 0px; display: block;" data-previous-indexv="3" hidden="" aria-hidden="true">
+                     
+                     <section class="past" style="top: 91.5px; display: none;" hidden="" aria-hidden="true">
+                         <h2>Bucles</h2>
+                         <img src="./Rutinas almacenadas (parte 2) - BD2_files/loop.png" alt="Bucles" style="border: none; box-shadow: none;">
+                     </section>
+                     <section class="past" style="top: 179.5px; display: none;" hidden="" aria-hidden="true">
+                         <h2>Bucle WHILE</h2>
+                        <pre><code class="hljs sql has-highlights" data-trim="" data-line-numbers="1-3"><table class="hljs-ln"><tbody><tr class="highlight-line"><td class="hljs-ln-numbers"><div class="hljs-ln-line hljs-ln-n" data-line-number="1"></div></td><td class="hljs-ln-code"><div class="hljs-ln-line">WHILE condicion <span class="hljs-keyword">DO</span></div></td></tr><tr class="highlight-line"><td class="hljs-ln-numbers"><div class="hljs-ln-line hljs-ln-n" data-line-number="2"></div></td><td class="hljs-ln-code"><div class="hljs-ln-line">    código <span class="hljs-keyword">SQL</span>;</div></td></tr><tr class="highlight-line"><td class="hljs-ln-numbers"><div class="hljs-ln-line hljs-ln-n" data-line-number="3"></div></td><td class="hljs-ln-code"><div class="hljs-ln-line"><span class="hljs-keyword">END</span> <span class="hljs-keyword">WHILE</span>;</div></td></tr></tbody></table></code></pre>
+                        <p>Se repite mientras la condición sea <strong>verdadera</strong></p>
+                     </section>
+                     <section class="past" style="top: 179.5px; display: none;" hidden="" aria-hidden="true">
+                         <h2>Bucle REPEAT</h2>
+                        <pre><code class="hljs sql has-highlights" data-trim="" data-line-numbers="1-3"><table class="hljs-ln"><tbody><tr class="highlight-line"><td class="hljs-ln-numbers"><div class="hljs-ln-line hljs-ln-n" data-line-number="1"></div></td><td class="hljs-ln-code"><div class="hljs-ln-line">REPEAT</div></td></tr><tr class="highlight-line"><td class="hljs-ln-numbers"><div class="hljs-ln-line hljs-ln-n" data-line-number="2"></div></td><td class="hljs-ln-code"><div class="hljs-ln-line">    código SQL;</div></td></tr><tr class="highlight-line"><td class="hljs-ln-numbers"><div class="hljs-ln-line hljs-ln-n" data-line-number="3"></div></td><td class="hljs-ln-code"><div class="hljs-ln-line">UNTIL condicion <span class="hljs-keyword">END</span> <span class="hljs-keyword">REPEAT</span>;</div></td></tr></tbody></table></code></pre>
+                        <p>Se repite mientras la condición sea <strong>falsa</strong></p>
+                     </section>
+                     <section class="" style="top: 115px; display: block;" aria-hidden="true">
+                         <h2>Bucle LOOP</h2>
+                        <pre><code class="hljs sql has-highlights" data-trim="" data-line-numbers="1-6"><table class="hljs-ln"><tbody><tr class="highlight-line"><td class="hljs-ln-numbers"><div class="hljs-ln-line hljs-ln-n" data-line-number="1"></div></td><td class="hljs-ln-code"><div class="hljs-ln-line">ejemplo : LOOP</div></td></tr><tr class="highlight-line"><td class="hljs-ln-numbers"><div class="hljs-ln-line hljs-ln-n" data-line-number="2"></div></td><td class="hljs-ln-code"><div class="hljs-ln-line">    código SQL;</div></td></tr><tr class="highlight-line"><td class="hljs-ln-numbers"><div class="hljs-ln-line hljs-ln-n" data-line-number="3"></div></td><td class="hljs-ln-code"><div class="hljs-ln-line">    IF condicion THEN</div></td></tr><tr class="highlight-line"><td class="hljs-ln-numbers"><div class="hljs-ln-line hljs-ln-n" data-line-number="4"></div></td><td class="hljs-ln-code"><div class="hljs-ln-line">        LEAVE ejemplo;</div></td></tr><tr class="highlight-line"><td class="hljs-ln-numbers"><div class="hljs-ln-line hljs-ln-n" data-line-number="5"></div></td><td class="hljs-ln-code"><div class="hljs-ln-line">    <span class="hljs-keyword">END</span> <span class="hljs-keyword">IF</span>;</div></td></tr><tr class="highlight-line"><td class="hljs-ln-numbers"><div class="hljs-ln-line hljs-ln-n" data-line-number="6"></div></td><td class="hljs-ln-code"><div class="hljs-ln-line"><span class="hljs-keyword">END</span> <span class="hljs-keyword">LOOP</span> ejemplo;</div></td></tr></tbody></table></code></pre>
+                        <p>Se repite indefinidamente hasta que se ejecute <strong>LEAVE</strong></p>
+                     </section>
+                 </section>
+
+                 <section class="stack past" style="top: 0px; display: block;" data-previous-indexv="4" hidden="" aria-hidden="true">
+                     <section class="past" style="top: 85.5px; display: none;" hidden="" aria-hidden="true">
+                         <h2>CONDITION HANDLERS</h2>
+                         <p>Son declaraciones que indican qué hacer si se verifica algún error.</p>
+                         <h2>CURSORES</h2>
+                         <p>Son índices que permiten recorrer el resultado de un SELECT.</p>
+                     </section>
+                     <section class="past" style="top: 222px; display: none;" hidden="" aria-hidden="true">
+                         <p>Lo explicaremos con un ejemplo:</p>
+                         <p>Realizaremos un procedimiento que defina como NULL
+                         todas las <strong>fechas de nacimiento futuras</strong></p>
+                     </section>
+
+                     <section class="past" style="top: 75px; display: none;" hidden="" aria-hidden="true">
+                        <pre><code class="hljs sql has-highlights" data-trim="" data-line-numbers="1-15"><table class="hljs-ln"><tbody><tr class="highlight-line"><td class="hljs-ln-numbers"><div class="hljs-ln-line hljs-ln-n" data-line-number="1"></div></td><td class="hljs-ln-code"><div class="hljs-ln-line"><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">PROCEDURE</span> verifica_fn()</div></td></tr><tr class="highlight-line"><td class="hljs-ln-numbers"><div class="hljs-ln-line hljs-ln-n" data-line-number="2"></div></td><td class="hljs-ln-code"><div class="hljs-ln-line"><span class="hljs-keyword">BEGIN</span> </div></td></tr><tr class="highlight-line"><td class="hljs-ln-numbers"><div class="hljs-ln-line hljs-ln-n" data-line-number="3"></div></td><td class="hljs-ln-code"><div class="hljs-ln-line">  <span class="hljs-keyword">DECLARE</span> contador <span class="hljs-built_in">INT</span> <span class="hljs-keyword">UNSIGNED</span> <span class="hljs-keyword">DEFAULT</span> <span class="hljs-number">0</span>; </div></td></tr><tr class="highlight-line"><td class="hljs-ln-numbers"><div class="hljs-ln-line hljs-ln-n" data-line-number="4"></div></td><td class="hljs-ln-code"><div class="hljs-ln-line">  <span class="hljs-keyword">DECLARE</span> ultima_fila <span class="hljs-built_in">BOOLEAN</span> <span class="hljs-keyword">DEFAULT</span> <span class="hljs-literal">FALSE</span>; </div></td></tr><tr class="highlight-line"><td class="hljs-ln-numbers"><div class="hljs-ln-line hljs-ln-n" data-line-number="5"></div></td><td class="hljs-ln-code"><div class="hljs-ln-line">  <span class="hljs-keyword">DECLARE</span> numero_var <span class="hljs-built_in">INT</span> <span class="hljs-keyword">UNSIGNED</span>; </div></td></tr><tr class="highlight-line"><td class="hljs-ln-numbers"><div class="hljs-ln-line hljs-ln-n" data-line-number="6"></div></td><td class="hljs-ln-code"><div class="hljs-ln-line">  <span class="hljs-comment">-- Declaramos un cursor para recorrer el SELECT:</span></div></td></tr><tr class="highlight-line"><td class="hljs-ln-numbers"><div class="hljs-ln-line hljs-ln-n" data-line-number="7"></div></td><td class="hljs-ln-code"><div class="hljs-ln-line">  <span class="hljs-keyword">DECLARE</span> anula_fecha <span class="hljs-keyword">CURSOR</span> <span class="hljs-keyword">FOR</span> </div></td></tr><tr class="highlight-line"><td class="hljs-ln-numbers"><div class="hljs-ln-line hljs-ln-n" data-line-number="8"></div></td><td class="hljs-ln-code"><div class="hljs-ln-line">    <span class="hljs-keyword">SELECT</span> numero <span class="hljs-keyword">FROM</span> ciclistas <span class="hljs-keyword">WHERE</span> fecha_nac &gt; <span class="hljs-keyword">CURDATE</span>(); </div></td></tr><tr class="highlight-line"><td class="hljs-ln-numbers"><div class="hljs-ln-line hljs-ln-n" data-line-number="9"></div></td><td class="hljs-ln-code"><div class="hljs-ln-line">  <span class="hljs-comment">-- Declaramos una acción para cuando no haya más filas(1329)</span></div></td></tr><tr class="highlight-line"><td class="hljs-ln-numbers"><div class="hljs-ln-line hljs-ln-n" data-line-number="10"></div></td><td class="hljs-ln-code"><div class="hljs-ln-line">  <span class="hljs-keyword">DECLARE</span> CONTINUE <span class="hljs-keyword">HANDLER</span> <span class="hljs-keyword">FOR</span> <span class="hljs-keyword">NOT</span> <span class="hljs-keyword">FOUND</span> </div></td></tr><tr class="highlight-line"><td class="hljs-ln-numbers"><div class="hljs-ln-line hljs-ln-n" data-line-number="11"></div></td><td class="hljs-ln-code"><div class="hljs-ln-line">    <span class="hljs-keyword">SET</span> ultima_fila = <span class="hljs-literal">TRUE</span>;</div></td></tr><tr class="highlight-line"><td class="hljs-ln-numbers"><div class="hljs-ln-line hljs-ln-n" data-line-number="12"></div></td><td class="hljs-ln-code"><div class="hljs-ln-line">  <span class="hljs-comment">-- Abrimos el cursor:  </span></div></td></tr><tr class="highlight-line"><td class="hljs-ln-numbers"><div class="hljs-ln-line hljs-ln-n" data-line-number="13"></div></td><td class="hljs-ln-code"><div class="hljs-ln-line">  OPEN anula_fecha; </div></td></tr><tr class="highlight-line"><td class="hljs-ln-numbers"><div class="hljs-ln-line hljs-ln-n" data-line-number="14"></div></td><td class="hljs-ln-code"><div class="hljs-ln-line">  <span class="hljs-comment">-- Tomamos el primer resultado del cursor:</span></div></td></tr><tr class="highlight-line"><td class="hljs-ln-numbers"><div class="hljs-ln-line hljs-ln-n" data-line-number="15"></div></td><td class="hljs-ln-code"><div class="hljs-ln-line">  FETCH anula_fecha INTO numero_var;</div></td></tr></tbody></table></code></pre>
+                        <p>(Sigue en la próxima diapositiva)</p>                         
+                     </section>
+                     <section class="past" style="top: 114px; display: block;" hidden="" aria-hidden="true">
+                         <p>(Viene de la diapositiva anterior)</p>
+                        <pre><code class="hljs sql has-highlights" data-trim="" data-line-numbers="1-12"><table class="hljs-ln"><tbody><tr class="highlight-line"><td class="hljs-ln-numbers"><div class="hljs-ln-line hljs-ln-n" data-line-number="1"></div></td><td class="hljs-ln-code"><div class="hljs-ln-line">  WHILE ultima_fila = FALSE <span class="hljs-keyword">DO</span> </div></td></tr><tr class="highlight-line"><td class="hljs-ln-numbers"><div class="hljs-ln-line hljs-ln-n" data-line-number="2"></div></td><td class="hljs-ln-code"><div class="hljs-ln-line">    <span class="hljs-keyword">UPDATE</span> ciclistas <span class="hljs-keyword">SET</span> fecha_nac = <span class="hljs-literal">NULL</span> </div></td></tr><tr class="highlight-line"><td class="hljs-ln-numbers"><div class="hljs-ln-line hljs-ln-n" data-line-number="3"></div></td><td class="hljs-ln-code"><div class="hljs-ln-line">        <span class="hljs-keyword">WHERE</span> numero = numero_var; </div></td></tr><tr class="highlight-line"><td class="hljs-ln-numbers"><div class="hljs-ln-line hljs-ln-n" data-line-number="4"></div></td><td class="hljs-ln-code"><div class="hljs-ln-line">    <span class="hljs-keyword">SET</span> contador = contador + <span class="hljs-number">1</span>; </div></td></tr><tr class="highlight-line"><td class="hljs-ln-numbers"><div class="hljs-ln-line hljs-ln-n" data-line-number="5"></div></td><td class="hljs-ln-code"><div class="hljs-ln-line">    <span class="hljs-comment">-- Tomamos el siguiente resultado del cursor:</span></div></td></tr><tr class="highlight-line"><td class="hljs-ln-numbers"><div class="hljs-ln-line hljs-ln-n" data-line-number="6"></div></td><td class="hljs-ln-code"><div class="hljs-ln-line">    FETCH anula_fecha INTO numero_var; </div></td></tr><tr class="highlight-line"><td class="hljs-ln-numbers"><div class="hljs-ln-line hljs-ln-n" data-line-number="7"></div></td><td class="hljs-ln-code"><div class="hljs-ln-line">  <span class="hljs-keyword">END</span> <span class="hljs-keyword">WHILE</span>; </div></td></tr><tr class="highlight-line"><td class="hljs-ln-numbers"><div class="hljs-ln-line hljs-ln-n" data-line-number="8"></div></td><td class="hljs-ln-code"><div class="hljs-ln-line">  <span class="hljs-comment">-- Cerramos el cursor:</span></div></td></tr><tr class="highlight-line"><td class="hljs-ln-numbers"><div class="hljs-ln-line hljs-ln-n" data-line-number="9"></div></td><td class="hljs-ln-code"><div class="hljs-ln-line">  CLOSE anula_fecha; </div></td></tr><tr class="highlight-line"><td class="hljs-ln-numbers"><div class="hljs-ln-line hljs-ln-n" data-line-number="10"></div></td><td class="hljs-ln-code"><div class="hljs-ln-line">  <span class="hljs-keyword">SELECT</span> <span class="hljs-keyword">CONCAT</span>(<span class="hljs-string">"Cilistas con fecha de nacimiento futura: "</span>,</div></td></tr><tr class="highlight-line"><td class="hljs-ln-numbers"><div class="hljs-ln-line hljs-ln-n" data-line-number="11"></div></td><td class="hljs-ln-code"><div class="hljs-ln-line">                 contador) <span class="hljs-keyword">as</span> resultado; </div></td></tr><tr class="highlight-line"><td class="hljs-ln-numbers"><div class="hljs-ln-line hljs-ln-n" data-line-number="12"></div></td><td class="hljs-ln-code"><div class="hljs-ln-line"><span class="hljs-keyword">END</span> </div></td></tr></tbody></table></code></pre>
+                     </section>
+                     <section class="" style="top: 66px; display: block;" aria-hidden="true">
+                         <h2>Algunos códigos de error</h2>
+                         <small>
+                         <ul>
+                             <li>1329: Ocurre al intentar obtener datos de una 
+                                 fila que no existe.</li>
+                             <li>1062: Ocurre cuando se intenta insertar NULL en
+                             una columna que no acepta valores nulos.</li>
+                             <li>1216: Ocurre cuando un programa intenta añadir
+                             o modificar un registro violando una restricción de
+                             clave foránea (foreign key).</li>
+                             <li>1217: Ocurre cuando se intenta eliminar un
+                             registro violando una restricción de clave foránea
+                             (foreign key)</li>
+                             <li>NOT FOUND: Ocurre cuando se intenta usar FETCH
+                                 o SELECT para obtener datos, pero no se obtiene
+                                 ningún dato.</li>
+                             <li>SQLEXCEPTION: Ocurre cuando la BD devuelve un 
+                                 error</li>
+                             <li>SQLWARNING: Ocurre cuando la BD devuelve un error
+                             o una advertencia (warning).</li>
+                         </ul></small>
+                     </section>
+                 </section>
+
+                 <section class="stack present" style="top: 0px; display: block;" data-previous-indexv="2">
+                     <section class="past" style="top: 182px; display: none;" hidden="" aria-hidden="true">
+                     <h2>Transacciones</h2>
+                     <p>Permiten definir un conjunto de sentencias SQL que se
+                     pueden confirmar (COMMIT) o deshacer (ROLLBACK)</p>
+                     </section>
+
+                     <section class="past" style="top: 163.5px; display: block;" hidden="" aria-hidden="true">
+                         <img src="./Rutinas almacenadas (parte 2) - BD2_files/rollback.png" alt="Transacción con rollback">
+                     </section>
+                     <section class="past" style="top: 65.5px; display: block;" hidden="" aria-hidden="true">
+                         <p>Al ejecutar ROLLBACK; se "deshacen" todos los cambios
+                         (DML) realizados desde START TRANSACTION;</p>
+                         <img src="./Rutinas almacenadas (parte 2) - BD2_files/rollback.png" alt="Transacción con rollback">
+                     </section>
+                     <section class="present" style="top: 57.5px; display: block;">
+                         <p>Al ejecutar COMMIT; se confirman todos los cambios
+                         realizados desde START TRANSACTION;</p>
+                         <img src="./Rutinas almacenadas (parte 2) - BD2_files/commit.png" alt="Transacción con commit">
+                     </section>
+                 </section>
+<!--
+                 <section>
+                     <section>
+                         <h2>Disparadores (triggers)</h2>
+                         <p>Se ejecutan <strong>antes</strong> o
+                         <strong>después</strong> de una sentencia INSERT,
+                         UPDATE o DELETE a una cierta tabla.</p>
+                     </section>
+                     <section>
+                         <h2>Ejemplo</h2>
+                         <p><strong>Antes</strong> de insertar un nuevo vehículo 
+                         a cierta tabla, poner la patente en mayúscula</p>
+                        <pre><code class="hljs sql" data-trim data-line-numbers="1-8"> 
+DELIMITER $$
+CREATE TRIGER patentes_en_mayusculas
+  BEFORE UPDATE ON vehiculos
+  FOR EACH ROW
+BEGIN
+  SET NEW.patente = UPPER(NEW.patente);
+END$$
+DELIMITER ;</code></pre>
+                     </section>
+                     <section>
+                         <ul>
+                             <li>En un UPDATE, se utiliza la palabra NEW para
+                             referirse al nuevo valor de un dato, y OLD para
+                             referirse al antiguo valor.</li>
+                             <li>Ej: Si hay que cambiar el equipo de un ciclista,
+                             NEW.equipo sería el nuevo equipo y OLD.equipo sería
+                             el valor que tenía hasta ahora la columna equipo.</li>
+                             <li>Obviamente, en los DELETE solamente se usa OLD,
+                             y en los INSERT solamente NEW.</li>
+                         </ul>
+                     </section>
+                     <section>
+                         <h2>Otro ejemplo:</h2>
+                         <p>Crear un disparador que impida que se ingresen ciclistas
+                         menores de edad.</p>
+                        <pre><code class="hljs sql" data-trim data-line-numbers="1-10"> 
+CREATE TRIGGER es_mayor
+  BEFORE INSERT ON ciclistas 
+  FOR EACH ROW 
+BEGIN
+  IF calcular_edad(NEW.fecha_nac) &lt; 18 THEN
+    -- Lanzamos una excepción genérica:
+    SIGNAL SQLSTATE '45000'
+    SET MESSAGE_TEXT = "No pueden participar menores";
+  END IF;
+END</code></pre>
+                     </section>
+                     <section>
+                         <h2>Otro ejemplo:</h2>
+                         <p>Si <strong>después</strong> de haber eliminado un
+                         ciclista, su equipo quedó vacío, eliminar también al
+                         equipo de la tabla equipos</p>
+                        <pre><code class="hljs sql" data-trim data-line-numbers="1-12"> 
+CREATE TRIGGER borrar_equipo_vacio
+  AFTER DELETE ON ciclistas
+  FOR EACH ROW
+BEGIN
+  DECLARE cantidad INT UNSIGNED;
+  SELECT COUNT(*) FROM ciclistas
+    WHERE equipo = OLD.equipo
+    INTO cantidad;
+  IF cantidad = 0 THEN
+    DELETE FROM equipos WHERE equipo = OLD.equipo;
+  END IF;
+END</code></pre>
+                     </section>
+                 </section>
+
+                 <section>
+                    <section>
+                        <h2>Eventos</h2>
+                        <ul>
+                            <li>Son rutinas que se ejecutan en cierto momento,
+                            ya sea por única vez, o con cierta periodicidad.</li>
+                            <li>No los estudiaremos en profundidad. (aka: no 
+                                entran en el parcial).</li>
+                        </ul>
+                    </section>
+                    <section>
+                        <h2>Event scheduler</h2>
+                        <p>Para que funcionen los eventos, debemos revisar que
+                        la variable global event_scheduler esté definida como ON.
+                        Si no es así, la definimos:</p>
+                        <img src="event_scheduler.png" alt="Definir event_scheduler">
+                    </section>
+                    <section>
+                        <h2>Ejemplo:</h2>
+                        <p>Crear un evento que, cada mes, elimine de la tabla a
+                        los ciclistas de más de 60 años.</p>
+                        <pre><code class="hljs sql" data-trim data-line-numbers="1-6"> 
+CREATE EVENT borrar_ciclistas_veteranos
+ON SCHEDULE EVERY 1 MONTH
+STARTS '2019-06-01'
+DO BEGIN
+  DELETE FROM ciclistas WHERE calcular_edad(fecha_nac) >= 60;
+END</code></pre>
+                    </section>
+                 </section>
+
+                 <section>
+                     <section>
+                         <h2>Listar, ver, y borrar rutinas</h2>
+                     </section>
+                     <section>
+                         <h2>Listar rutinas</h3>
+                        <pre><code class="hljs sql" data-trim data-line-numbers="1-4"> 
+SHOW PROCEDURE STATUS WHERE db LIKE "nombre_de_la_base_de_datos";
+SHOW FUNCTION STATUS WHERE db LIKE "nombre_de_la_base_de_datos";
+SHOW TRIGGERS IN nombre_de_la_base_de_datos;
+SHOW EVENTS IN nombre_de_la_base_de_datos;</code></pre>
+                     </section>
+                     <section>
+                         <h2>Ver el código de una rutina</h2>
+                        <pre><code class="hljs sql" data-trim data-line-numbers="1-4"> 
+SHOW CREATE PROCEDURE nombre_del_procedimiento;
+SHOW CREATE FUNCTION nombre_de_la_funcion;
+SHOW CREATE TRIGGER nombre_del_disparador;
+SHOW CREATE EVENT nombre_del_evento;</code></pre>                         
+                     </section>
+                     <section>
+                         <h2>Eliminar rutinas</h2>
+                        <pre><code class="hljs sql" data-trim data-line-numbers="1-9"> 
+DROP PROCEDURE nombre_del_procedimiento;
+DROP FUNCTION nombre_de_la_funcion;
+DROP TRIGGER nombre_del_disparador;
+-- "Des-agendar" un evento:
+ALTER EVENT nombre_del_evento DISABLE;
+-- Volver a agendar el evento:
+ALTER EVENT nombre_del_evento ENABLE;
+-- Eliminar el evento:
+DROP EVENT nombre_del_evento;</code></pre>
+                     </section>
+
+                 </section>
+-->
+            </div>
+        <div class="backgrounds"><div class="slide-background past" data-loaded="true" style="display: none;"><div class="slide-background-content"></div></div><div class="slide-background past" data-loaded="true" style="display: none;"><div class="slide-background-content"></div></div><div class="slide-background past" data-loaded="true" style="display: none;"><div class="slide-background-content"></div></div><div class="slide-background stack past" style="display: block;" data-loaded="true"><div class="slide-background-content"></div><div class="slide-background past" style="display: none;" data-loaded="true"><div class="slide-background-content"></div></div><div class="slide-background past" style="display: none;" data-loaded="true"><div class="slide-background-content"></div></div><div class="slide-background past" style="display: none;" data-loaded="true"><div class="slide-background-content"></div></div><div class="slide-background present" style="display: block;" data-loaded="true"><div class="slide-background-content"></div></div></div><div class="slide-background stack past" style="display: block;" data-loaded="true"><div class="slide-background-content"></div><div class="slide-background past" style="display: none;" data-loaded="true"><div class="slide-background-content"></div></div><div class="slide-background past" style="display: none;" data-loaded="true"><div class="slide-background-content"></div></div><div class="slide-background past" style="display: none;" data-loaded="true"><div class="slide-background-content"></div></div><div class="slide-background past" style="display: block;" data-loaded="true"><div class="slide-background-content"></div></div><div class="slide-background present" style="display: block;" data-loaded="true"><div class="slide-background-content"></div></div></div><div class="slide-background stack present" style="display: block;" data-loaded="true"><div class="slide-background-content"></div><div class="slide-background past" style="display: none;" data-loaded="true"><div class="slide-background-content"></div></div><div class="slide-background past" style="display: block;" data-loaded="true"><div class="slide-background-content"></div></div><div class="slide-background past" style="display: block;" data-loaded="true"><div class="slide-background-content"></div></div><div class="slide-background present" style="display: block;" data-loaded="true"><div class="slide-background-content"></div></div></div></div><div class="progress" style="display: block;"><span style="width: 1600px;"></span></div><aside class="controls" data-controls-layout="bottom-right" data-controls-back-arrows="faded" style="display: block;"><button class="navigate-left enabled" aria-label="previous slide"><div class="controls-arrow"></div></button><button class="navigate-right" aria-label="next slide" disabled="disabled"><div class="controls-arrow"></div></button><button class="navigate-up enabled" aria-label="above slide"><div class="controls-arrow"></div></button><button class="navigate-down" aria-label="below slide" disabled="disabled"><div class="controls-arrow"></div></button></aside><div class="slide-number" style="display: none;"></div><div class="speaker-notes" data-prevent-swipe="" tabindex="0"></div><div class="pause-overlay"><button class="resume-button">Resume presentation</button></div><div id="aria-status-div" aria-live="polite" aria-atomic="true" style="position: absolute; height: 1px; width: 1px; overflow: hidden; clip: rect(1px, 1px, 1px, 1px);">
+                         Al ejecutar COMMIT; se confirman todos los cambios
+                         realizados desde START TRANSACTION;
+                         
+                     </div></div>
+
+        <script src="./Rutinas almacenadas (parte 2) - BD2_files/reveal.js.descarga"></script>
+
+        <script>
+            // More info about config & dependencies:
+            // - https://github.com/hakimel/reveal.js#configuration
+            // - https://github.com/hakimel/reveal.js#dependencies
+            Reveal.initialize({
+                controls: true,
+                progress: true,
+                center: true,
+                hash: true,
+
+                transition: 'slide', // none/fade/slide/convex/concave/zoom
+                dependencies: [
+                    { src: 'plugin/markdown/marked.js' },
+                    { src: 'plugin/markdown/markdown.js' },
+                    { src: 'plugin/notes/notes.js', async: true },
+                    { src: 'plugin/highlight/highlight.js', async: true }
+                ]
+            });
+        </script>
+    
+
+</body></html>

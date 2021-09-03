@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<!-- saved from url=(0042)https://juansemarquez.com/reveal/sp.html#/ -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+    
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>Rutinas almacenadas - BD2</title>
+
+		<link rel="stylesheet" href="./Rutinas almacenadas - BD2_files/reset.css">
+		<link rel="stylesheet" href="./Rutinas almacenadas - BD2_files/reveal.css">
+		<link rel="stylesheet" href="./Rutinas almacenadas - BD2_files/sky.css">
+
+		<!-- Theme used for syntax highlighting of code -->
+		<link rel="stylesheet" href="./Rutinas almacenadas - BD2_files/monokai.css">
+
+		<!-- Printing and PDF exports -->
+		<script>
+			var link = document.createElement( 'link' );
+			link.rel = 'stylesheet';
+			link.type = 'text/css';
+			link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+			document.getElementsByTagName( 'head' )[0].appendChild( link );
+		</script><link rel="stylesheet" type="text/css" href="./Rutinas almacenadas - BD2_files/paper.css"><script type="text/javascript" src="./Rutinas almacenadas - BD2_files/marked.js.descarga"></script><script type="text/javascript" src="./Rutinas almacenadas - BD2_files/markdown.js.descarga"></script><script type="text/javascript" src="./Rutinas almacenadas - BD2_files/notes.js.descarga"></script><script type="text/javascript" src="./Rutinas almacenadas - BD2_files/highlight.js.descarga"></script>
+	<style type="text/css">.hljs-ln{border-collapse:collapse}.hljs-ln td{padding:0}.hljs-ln-n:before{content:attr(data-line-number)}</style></head>
+	<body>
+		<div class="reveal slide center has-vertical-slides has-horizontal-slides ready" role="application" data-transition-speed="default" data-background-transition="fade" style="">
+			<div class="slides" style="width: 960px; height: 700px; zoom: 1.00389;">
+				<section class="present" style="top: 32px; display: block;">
+                <h2>Rutinas almacenadas</h2>
+                <p><small>Bases de Datos II - 3º2ª DS<br>
+                Prof. Ing. Juan Marquez</small></p>
+                <img src="./Rutinas almacenadas - BD2_files/daVinci.jpg" alt="Máquinas de Da Vinci" style="border: none;">
+                </section>
+
+				<section hidden="" aria-hidden="true" class="future" style="top: 205.5px; display: block;">
+                <h3>Rutinas almacenadas</h3>
+                <ul>
+                    <li>Son rutinas definidas por el administrador de una BD 
+                       determinada.</li>
+                    <li>En MySQL, están disponibles desde la versión 5.0</li>
+                </ul>
+                </section>
+
+                <section hidden="" aria-hidden="true" class="future" style="top: 19.5px; display: block;">
+                    
+                   Hay cuatro tipos de rutinas almacenadas:
+                    <ul>
+                        <li><strong>Funciones</strong>: Se pueden invocar desde 
+                            cualquier query.</li>
+                        <li><strong>Procedimientos</strong>: Se pueden invocar 
+                            desde cualquier aplicación que tenga acceso a la BD.</li>
+                        <li><strong>Disparadores (triggers)</strong>: Se ejecutan automáticamente
+                            después de haberse ejecutado un INSERT, UPDATE o
+                            DELETE a una cierta tabla</li>
+                        <li><strong>Eventos</strong>: Se ejecutan automáticamente en un momento
+                            agendado.</li>
+                    </ul>
+                   En esta clase, nos ocuparemos solamente de los dos primeros
+                </section>
+                <section hidden="" aria-hidden="true" class="future" style="top: 350px; display: none;">
+                    <h2>Tablas de ejemplo</h2>
+                    <img src="./Rutinas almacenadas - BD2_files/ciclismo_con_fn.png" alt"der="" de="" la="" bd"="">
+                </section>
+                 <section hidden="" aria-hidden="true" class="stack future" style="top: 350px; display: none;">
+                     
+                     <section style="top: 350px; display: none;">
+                         <h2>Creando una función con MySQL Workbench</h2>
+                         <img src="./Rutinas almacenadas - BD2_files/crear_funcion.png" alt="Crear una función con MySQL Workbench">
+                     </section>
+                     <section class="future" aria-hidden="true" style="top: 350px; display: none;">
+                         <img src="./Rutinas almacenadas - BD2_files/crear_funcion2.png" alt="Código de la función">
+                     </section>
+                     <section class="future" aria-hidden="true" style="top: 350px; display: none;">
+					<pre><code class="hljs sql has-highlights" data-trim="" data-line-numbers="1-21" style="max-height: 600px;"><table class="hljs-ln"><tbody><tr class="highlight-line"><td class="hljs-ln-numbers"><div class="hljs-ln-line hljs-ln-n" data-line-number="1"></div></td><td class="hljs-ln-code"><div class="hljs-ln-line">DELIMITER $$</div></td></tr><tr class="highlight-line"><td class="hljs-ln-numbers"><div class="hljs-ln-line hljs-ln-n" data-line-number="2"></div></td><td class="hljs-ln-code"><div class="hljs-ln-line"><span class="hljs-keyword">USE</span> ciclismo2$$</div></td></tr><tr class="highlight-line"><td class="hljs-ln-numbers"><div class="hljs-ln-line hljs-ln-n" data-line-number="3"></div></td><td class="hljs-ln-code"><div class="hljs-ln-line"><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">FUNCTION</span> calcular_edad(fn <span class="hljs-built_in">DATE</span>) <span class="hljs-keyword">RETURNS</span> <span class="hljs-built_in">INT</span></div></td></tr><tr class="highlight-line"><td class="hljs-ln-numbers"><div class="hljs-ln-line hljs-ln-n" data-line-number="4"></div></td><td class="hljs-ln-code"><div class="hljs-ln-line"><span class="hljs-comment">-- Recibe una fecha de nacimiento, y retorna la edad en años.</span></div></td></tr><tr class="highlight-line"><td class="hljs-ln-numbers"><div class="hljs-ln-line hljs-ln-n" data-line-number="5"></div></td><td class="hljs-ln-code"><div class="hljs-ln-line"><span class="hljs-keyword">BEGIN</span></div></td></tr><tr class="highlight-line"><td class="hljs-ln-numbers"><div class="hljs-ln-line hljs-ln-n" data-line-number="6"></div></td><td class="hljs-ln-code"><div class="hljs-ln-line"><span class="hljs-comment">-- Declaramos la variable edad</span></div></td></tr><tr class="highlight-line"><td class="hljs-ln-numbers"><div class="hljs-ln-line hljs-ln-n" data-line-number="7"></div></td><td class="hljs-ln-code"><div class="hljs-ln-line"><span class="hljs-keyword">DECLARE</span> edad <span class="hljs-built_in">INT</span>;</div></td></tr><tr class="highlight-line"><td class="hljs-ln-numbers"><div class="hljs-ln-line hljs-ln-n" data-line-number="8"></div></td><td class="hljs-ln-code"><div class="hljs-ln-line"><span class="hljs-keyword">SELECT</span> <span class="hljs-keyword">YEAR</span>(<span class="hljs-keyword">CURDATE</span>()) - <span class="hljs-keyword">YEAR</span>(fn) <span class="hljs-keyword">INTO</span> edad;</div></td></tr><tr class="highlight-line"><td class="hljs-ln-numbers"><div class="hljs-ln-line hljs-ln-n" data-line-number="9"></div></td><td class="hljs-ln-code"><div class="hljs-ln-line"> </div></td></tr><tr class="highlight-line"><td class="hljs-ln-numbers"><div class="hljs-ln-line hljs-ln-n" data-line-number="10"></div></td><td class="hljs-ln-code"><div class="hljs-ln-line"><span class="hljs-comment">-- Si todavía no cumplió años este año, le resto 1 a la edad.</span></div></td></tr><tr class="highlight-line"><td class="hljs-ln-numbers"><div class="hljs-ln-line hljs-ln-n" data-line-number="11"></div></td><td class="hljs-ln-code"><div class="hljs-ln-line">IF MONTH(CURDATE()) &lt; MONTH(fn) </div></td></tr><tr class="highlight-line"><td class="hljs-ln-numbers"><div class="hljs-ln-line hljs-ln-n" data-line-number="12"></div></td><td class="hljs-ln-code"><div class="hljs-ln-line">  OR (MONTH(CURDATE())=MONTH(fn) AND DAY(CURDATE())&lt;DAY(fn))</div></td></tr><tr class="highlight-line"><td class="hljs-ln-numbers"><div class="hljs-ln-line hljs-ln-n" data-line-number="13"></div></td><td class="hljs-ln-code"><div class="hljs-ln-line">THEN</div></td></tr><tr class="highlight-line"><td class="hljs-ln-numbers"><div class="hljs-ln-line hljs-ln-n" data-line-number="14"></div></td><td class="hljs-ln-code"><div class="hljs-ln-line">    <span class="hljs-keyword">SET</span> edad = edad - <span class="hljs-number">1</span>;</div></td></tr><tr class="highlight-line"><td class="hljs-ln-numbers"><div class="hljs-ln-line hljs-ln-n" data-line-number="15"></div></td><td class="hljs-ln-code"><div class="hljs-ln-line"><span class="hljs-keyword">END</span> <span class="hljs-keyword">IF</span>;</div></td></tr><tr class="highlight-line"><td class="hljs-ln-numbers"><div class="hljs-ln-line hljs-ln-n" data-line-number="16"></div></td><td class="hljs-ln-code"><div class="hljs-ln-line">RETURN edad;</div></td></tr><tr class="highlight-line"><td class="hljs-ln-numbers"><div class="hljs-ln-line hljs-ln-n" data-line-number="17"></div></td><td class="hljs-ln-code"><div class="hljs-ln-line"><span class="hljs-keyword">END</span>$$</div></td></tr><tr class="highlight-line"><td class="hljs-ln-numbers"><div class="hljs-ln-line hljs-ln-n" data-line-number="18"></div></td><td class="hljs-ln-code"><div class="hljs-ln-line"> </div></td></tr><tr class="highlight-line"><td class="hljs-ln-numbers"><div class="hljs-ln-line hljs-ln-n" data-line-number="19"></div></td><td class="hljs-ln-code"><div class="hljs-ln-line">DELIMITER ;</div></td></tr></tbody></table></code></pre>
+                     </section>
+
+                     <section class="future" aria-hidden="true" style="top: 350px; display: none;">
+                         <h3>Utilizando la nueva función:</h3>
+                    <pre><code class="hljs sql has-highlights" data-trim="" data-line-numbers="1-3"><table class="hljs-ln"><tbody><tr class="highlight-line"><td class="hljs-ln-numbers"><div class="hljs-ln-line hljs-ln-n" data-line-number="1"></div></td><td class="hljs-ln-code"><div class="hljs-ln-line"><span class="hljs-keyword">SELECT</span> numero, nombre, fecha_nac, </div></td></tr><tr class="highlight-line"><td class="hljs-ln-numbers"><div class="hljs-ln-line hljs-ln-n" data-line-number="2"></div></td><td class="hljs-ln-code"><div class="hljs-ln-line">       calcular_edad(fecha_nac)</div></td></tr><tr class="highlight-line"><td class="hljs-ln-numbers"><div class="hljs-ln-line hljs-ln-n" data-line-number="3"></div></td><td class="hljs-ln-code"><div class="hljs-ln-line"><span class="hljs-keyword">FROM</span> ciclistas;</div></td></tr></tbody></table></code></pre>
+                    <img src="./Rutinas almacenadas - BD2_files/crear_funcion3.png" alt="Resultado de la query que usa la función">
+                     </section>			
+                 </section>
+
+                 <section hidden="" aria-hidden="true" class="stack future" style="top: 350px; display: none;">
+                     <section style="top: 350px; display: none;">
+                     <h2>Procedimientos:</h2>
+                     <p>Crearemos un procedimiento que permita ingresar:</p>
+                     <ul>
+                         <li>Nombre del nuevo ciclista</li>
+                         <li>Equipo del nuevo ciclista</li>
+                         <li>Fecha de nacimiento del nuevo ciclista</li>
+                     </ul>
+                     <p>Si el equipo existe, ingresa el ciclista.<br>
+                     Si el equipo <strong>no</strong> existe, ingresa el
+                     equipo, con director "Desconocido", y luego ingresa el
+                     nuevo ciclista.</p>
+                     </section>
+
+                     <section class="future" aria-hidden="true" style="top: 350px; display: none;">
+                         <h3>Con MySQL Workbench:</h3>
+                         <img src="./Rutinas almacenadas - BD2_files/crear_proced1.png" alt="Crear procedimiento">
+                     </section>
+
+                     <section class="future" aria-hidden="true" style="top: 350px; display: none;">
+                         <img src="./Rutinas almacenadas - BD2_files/crear_proced2.png" alt="Crear procedimiento">
+                     </section>
+
+                     <section class="future" aria-hidden="true" style="top: 350px; display: none;">
+                     <pre><code class="hljs sql has-highlights" data-trim="" data-line-numbers="1-15"><table class="hljs-ln"><tbody><tr class="highlight-line"><td class="hljs-ln-numbers"><div class="hljs-ln-line hljs-ln-n" data-line-number="1"></div></td><td class="hljs-ln-code"><div class="hljs-ln-line">DELIMITER $$</div></td></tr><tr class="highlight-line"><td class="hljs-ln-numbers"><div class="hljs-ln-line hljs-ln-n" data-line-number="2"></div></td><td class="hljs-ln-code"><div class="hljs-ln-line"><span class="hljs-keyword">USE</span> <span class="hljs-string">`ciclismo2`</span>$$</div></td></tr><tr class="highlight-line"><td class="hljs-ln-numbers"><div class="hljs-ln-line hljs-ln-n" data-line-number="3"></div></td><td class="hljs-ln-code"><div class="hljs-ln-line"><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">PROCEDURE</span> nuevo_ciclista (</div></td></tr><tr class="highlight-line"><td class="hljs-ln-numbers"><div class="hljs-ln-line hljs-ln-n" data-line-number="4"></div></td><td class="hljs-ln-code"><div class="hljs-ln-line">  nombre_c <span class="hljs-built_in">VARCHAR</span>(<span class="hljs-number">30</span>),equipo_c <span class="hljs-built_in">VARCHAR</span>(<span class="hljs-number">25</span>),fecha_nac_c <span class="hljs-built_in">DATE</span></div></td></tr><tr class="highlight-line"><td class="hljs-ln-numbers"><div class="hljs-ln-line hljs-ln-n" data-line-number="5"></div></td><td class="hljs-ln-code"><div class="hljs-ln-line">)</div></td></tr><tr class="highlight-line"><td class="hljs-ln-numbers"><div class="hljs-ln-line hljs-ln-n" data-line-number="6"></div></td><td class="hljs-ln-code"><div class="hljs-ln-line"><span class="hljs-keyword">BEGIN</span></div></td></tr><tr class="highlight-line"><td class="hljs-ln-numbers"><div class="hljs-ln-line hljs-ln-n" data-line-number="7"></div></td><td class="hljs-ln-code"><div class="hljs-ln-line"><span class="hljs-keyword">IF</span> <span class="hljs-keyword">NOT</span> (<span class="hljs-keyword">SELECT</span> <span class="hljs-keyword">EXISTS</span></div></td></tr><tr class="highlight-line"><td class="hljs-ln-numbers"><div class="hljs-ln-line hljs-ln-n" data-line-number="8"></div></td><td class="hljs-ln-code"><div class="hljs-ln-line">            (<span class="hljs-keyword">SELECT</span> * <span class="hljs-keyword">FROM</span> equipos <span class="hljs-keyword">WHERE</span> equipo = equipo_c)</div></td></tr><tr class="highlight-line"><td class="hljs-ln-numbers"><div class="hljs-ln-line hljs-ln-n" data-line-number="9"></div></td><td class="hljs-ln-code"><div class="hljs-ln-line">       ) <span class="hljs-keyword">THEN</span></div></td></tr><tr class="highlight-line"><td class="hljs-ln-numbers"><div class="hljs-ln-line hljs-ln-n" data-line-number="10"></div></td><td class="hljs-ln-code"><div class="hljs-ln-line">    <span class="hljs-keyword">INSERT</span> <span class="hljs-keyword">INTO</span> equipos(equipo, director) <span class="hljs-keyword">VALUES</span> (equipo_c, <span class="hljs-string">"Desconocido"</span>);</div></td></tr><tr class="highlight-line"><td class="hljs-ln-numbers"><div class="hljs-ln-line hljs-ln-n" data-line-number="11"></div></td><td class="hljs-ln-code"><div class="hljs-ln-line"><span class="hljs-keyword">END</span> <span class="hljs-keyword">IF</span>;</div></td></tr><tr class="highlight-line"><td class="hljs-ln-numbers"><div class="hljs-ln-line hljs-ln-n" data-line-number="12"></div></td><td class="hljs-ln-code"><div class="hljs-ln-line"><span class="hljs-keyword">INSERT</span> <span class="hljs-keyword">INTO</span> ciclistas (nombre, equipo, fecha_nac) </div></td></tr><tr class="highlight-line"><td class="hljs-ln-numbers"><div class="hljs-ln-line hljs-ln-n" data-line-number="13"></div></td><td class="hljs-ln-code"><div class="hljs-ln-line"><span class="hljs-keyword">VALUES</span> (nombre_c, equipo_c, fecha_nac_c);</div></td></tr><tr class="highlight-line"><td class="hljs-ln-numbers"><div class="hljs-ln-line hljs-ln-n" data-line-number="14"></div></td><td class="hljs-ln-code"><div class="hljs-ln-line"><span class="hljs-keyword">END</span>$$</div></td></tr><tr class="highlight-line"><td class="hljs-ln-numbers"><div class="hljs-ln-line hljs-ln-n" data-line-number="15"></div></td><td class="hljs-ln-code"><div class="hljs-ln-line">DELIMITER ;</div></td></tr></tbody></table></code></pre>                         
+                     </section>
+                     <section class="future" aria-hidden="true" style="top: 350px; display: none;">
+                         <h3>Usar el procedimiento</h3>
+                         <pre><code class="hljs sql"><span class="hljs-keyword">CALL</span> nuevo_ciclista(<span class="hljs-string">"Fulano"</span>,<span class="hljs-string">"nuevo"</span>,<span class="hljs-string">"2000-12-01"</span>);</code></pre>
+                         <img src="./Rutinas almacenadas - BD2_files/crear_proced3.png" alt="Nuevo ciclista insertado">
+                         <img src="./Rutinas almacenadas - BD2_files/crear_proced4.png" alt="Nuevo equipo insertado">
+                         <p><small>(Salidas incompletas)</small></p>
+                     </section>
+                     <section class="future" aria-hidden="true" style="top: 350px; display: none;">
+                         <h2>Con phpmyadmin</h2>
+                         <img src="./Rutinas almacenadas - BD2_files/crear_proced5.png" alt="Crear procedimiento con phpmyadmin">
+                     </section>
+                     <section class="future" aria-hidden="true" style="top: 350px; display: none;">
+                         <img src="./Rutinas almacenadas - BD2_files/crear_proced6.png" alt="Crear procedimiento con phpmyadmin">
+                     </section>
+                 </section>
+
+                 <section hidden="" aria-hidden="true" class="future" style="top: 350px; display: none;">
+                     <h2>Eliminar un procedimiento o función</h2>
+                     <pre><code class="hljs sql"><span class="hljs-keyword">DROP</span> <span class="hljs-keyword">PROCEDURE</span> nuevo_ciclista;</code></pre>
+                     <pre><code class="hljs sql"><span class="hljs-keyword">DROP</span> <span class="hljs-keyword">FUNCTION</span> calcular_edad;</code></pre>
+                 </section>
+
+                 <section hidden="" aria-hidden="true" class="stack future" style="top: 350px; display: none;">
+                     <section style="top: 350px; display: none;">
+                     <h2>Variables en las rutinas</h2>
+                     <p>Declarar variables:
+                     </p><pre><code class="hljs sql"><span class="hljs-keyword">DECLARE</span> nombre_variable TIPO;</code></pre>
+                     <p>Por ejemplo:
+                     </p><pre><code class="hljs sql"><span class="hljs-keyword">DECLARE</span> equipo_var <span class="hljs-built_in">VARCHAR</span>(<span class="hljs-number">25</span>);
+<span class="hljs-keyword">DECLARE</span> edad_var <span class="hljs-built_in">INT</span>;</code></pre>
+                     </section>
+                     <section class="future" aria-hidden="true" style="top: 350px; display: none;">
+                         <h2>Variables</h2>
+                         <p>Definir valor literal para una variable:</p>
+                         <pre><code class="hljs sql"><span class="hljs-keyword">SET</span> nombre_variable = nuevoValor;</code></pre>
+                         <p>Por ejemplo:</p>
+                         <pre><code class="hljs sql"><span class="hljs-keyword">SET</span> edad_var = <span class="hljs-number">25</span>;</code></pre>
+                         <p>Definir valor para una variable desde un SELECT:</p>
+                         <pre><code class="hljs sql"><span class="hljs-keyword">SELECT</span> ... <span class="hljs-keyword">INTO</span> nombre_variable;</code></pre>
+                         <p>Por ejemplo</p>
+                         <pre><code class="hljs sql"><span class="hljs-keyword">SELECT</span> equipo <span class="hljs-keyword">FROM</span> ciclistas
+<span class="hljs-keyword">WHERE</span> numero = <span class="hljs-number">5</span>
+<span class="hljs-keyword">INTO</span> equipo_var;</code></pre>
+                     </section>
+                 </section>
+                 <section hidden="" aria-hidden="true" class="stack future" style="top: 350px; display: none;">
+                     <section style="top: 350px; display: none;">
+                         <h2>Estructura IF</h2>
+                         <p>Puede no tener camino alternativo (sin else):</p>
+                         <pre><code class="hljs sql">IF expresion_booleana THEN
+codigo a ejecutar si la condicion es verdadera;
+<span class="hljs-keyword">END</span> <span class="hljs-keyword">IF</span>;</code></pre>                    
+                     </section>
+                     <section class="future" aria-hidden="true" style="top: 350px; display: none;">
+                         <h2>Estructura IF...ELSE</h2>
+                         <p>Para el caso del camino alternativo (else):</p>
+                         <pre><code class="hljs sql">IF expresion_booleana THEN
+codigo a ejecutar si la condicion es verdadera;
+ELSE
+codigo a ejecutar si la condicion es falsa;
+<span class="hljs-keyword">END</span> <span class="hljs-keyword">IF</span>;</code></pre>                    
+                     </section>
+                     <section class="future" aria-hidden="true" style="top: 350px; display: none;">
+                         <h2>Estructura IF...ELSEIF...ELSE</h2>
+                         <p>Para más de dos opciones:</p>
+                         <pre><code class="hljs sql">IF expresion_booleana THEN
+codigo a ejecutar si la primer condicion es verdadera;
+ELSEIF expresion_booleana THEN
+codigo a ejecutar si la 1ª condición es falsa y la 2ª verdadera;
+ELSEIF expresion_booleana THEN
+pueden ir todos los ELSEIF necesarios;
+ELSE
+codigo a ejecutar si todas las condiciones son falsas;
+<span class="hljs-keyword">END</span> <span class="hljs-keyword">IF</span>;</code></pre>                    
+                     </section>
+                     <section class="future" aria-hidden="true" style="top: 350px; display: none;">
+                         <h2>Estructura if</h2>
+                         <ul>
+                             <li>Con la estructura if..elseif...else, se sigue
+                             solamente uno de los caminos.</li>
+                             <li>Los if se pueden anidar, uno dentro de otro,
+                             sin límite.</li>
+                             <li>No olvidar el uso de la palabra <strong>THEN</strong>
+                             ni de <strong>END IF;</strong> (con punto y coma al final).</li>
+                         </ul>
+                     </section>
+                     <section class="future" aria-hidden="true" style="top: 350px; display: none;">
+                         <h2>Ejemplo:</h2>
+                         <p>Función que retorna TRUE si un equipo tiene más de
+                         cinco ciclistas, y FALSE de lo contrario:</p>
+                         <pre><code class="hljs sql"><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">FUNCTION</span> mas_de_cinco(eq <span class="hljs-built_in">VARCHAR</span>(<span class="hljs-number">25</span>)) <span class="hljs-keyword">RETURNS</span> <span class="hljs-built_in">BOOLEAN</span>
+<span class="hljs-keyword">BEGIN</span>
+<span class="hljs-comment">-- Declaramos la variable cantidad</span>
+<span class="hljs-keyword">DECLARE</span> cantidad <span class="hljs-built_in">INT</span>;
+<span class="hljs-keyword">SELECT</span> <span class="hljs-keyword">COUNT</span>(*) <span class="hljs-keyword">FROM</span> ciclistas
+<span class="hljs-keyword">WHERE</span> equipo <span class="hljs-keyword">LIKE</span> eq 
+<span class="hljs-keyword">INTO</span> cantidad;
+
+IF cantidad &gt; 5 THEN
+    RETURN TRUE;	
+ELSE
+    RETURN FALSE;
+<span class="hljs-keyword">END</span> <span class="hljs-keyword">IF</span>;
+<span class="hljs-keyword">END</span></code></pre>
+                     </section>
+                     <section class="future" aria-hidden="true" style="top: 350px; display: none;">
+                         <p>Probando la nueva función</p>
+                         <pre><code class="hljs sql"><span class="hljs-keyword">SELECT</span> equipo, mas_de_cinco(equipo) <span class="hljs-keyword">from</span> equipos;</code></pre>
+                         <p>(En MySQL, TRUE es 1 y FALSE es 0)</p>
+                         <img src="./Rutinas almacenadas - BD2_files/ejemplo_if.png" alt="Salida de la consulta">
+
+                     </section>
+
+
+                 </section>
+
+
+
+            </div>
+        <div class="backgrounds"><div class="slide-background present" data-loaded="true" style="display: block;"><div class="slide-background-content"></div></div><div class="slide-background future" data-loaded="true" style="display: block;"><div class="slide-background-content"></div></div><div class="slide-background future" data-loaded="true" style="display: block;"><div class="slide-background-content"></div></div><div class="slide-background future" style="display: none;"><div class="slide-background-content"></div></div><div class="slide-background stack future" style="display: none;"><div class="slide-background-content"></div><div class="slide-background present" style="display: none;"><div class="slide-background-content"></div></div><div class="slide-background future" style="display: none;"><div class="slide-background-content"></div></div><div class="slide-background future" style="display: none;"><div class="slide-background-content"></div></div><div class="slide-background future" style="display: none;"><div class="slide-background-content"></div></div></div><div class="slide-background stack future" style="display: none;"><div class="slide-background-content"></div><div class="slide-background present" style="display: none;"><div class="slide-background-content"></div></div><div class="slide-background future" style="display: none;"><div class="slide-background-content"></div></div><div class="slide-background future" style="display: none;"><div class="slide-background-content"></div></div><div class="slide-background future" style="display: none;"><div class="slide-background-content"></div></div><div class="slide-background future" style="display: none;"><div class="slide-background-content"></div></div><div class="slide-background future" style="display: none;"><div class="slide-background-content"></div></div><div class="slide-background future" style="display: none;"><div class="slide-background-content"></div></div></div><div class="slide-background future" style="display: none;"><div class="slide-background-content"></div></div><div class="slide-background stack future" style="display: none;"><div class="slide-background-content"></div><div class="slide-background present" style="display: none;"><div class="slide-background-content"></div></div><div class="slide-background future" style="display: none;"><div class="slide-background-content"></div></div></div><div class="slide-background stack future" style="display: none;"><div class="slide-background-content"></div><div class="slide-background present" style="display: none;"><div class="slide-background-content"></div></div><div class="slide-background future" style="display: none;"><div class="slide-background-content"></div></div><div class="slide-background future" style="display: none;"><div class="slide-background-content"></div></div><div class="slide-background future" style="display: none;"><div class="slide-background-content"></div></div><div class="slide-background future" style="display: none;"><div class="slide-background-content"></div></div><div class="slide-background future" style="display: none;"><div class="slide-background-content"></div></div></div></div><div class="progress" style="display: block;"><span style="width: 0px;"></span></div><aside class="controls" data-controls-layout="bottom-right" data-controls-back-arrows="faded" style="display: block;"><button class="navigate-left" aria-label="previous slide" disabled="disabled"><div class="controls-arrow"></div></button><button class="navigate-right enabled highlight" aria-label="next slide"><div class="controls-arrow"></div></button><button class="navigate-up" aria-label="above slide" disabled="disabled"><div class="controls-arrow"></div></button><button class="navigate-down" aria-label="below slide" disabled="disabled"><div class="controls-arrow"></div></button></aside><div class="slide-number" style="display: none;"></div><div class="speaker-notes" data-prevent-swipe="" tabindex="0"></div><div class="pause-overlay"><button class="resume-button">Resume presentation</button></div><div id="aria-status-div" aria-live="polite" aria-atomic="true" style="position: absolute; height: 1px; width: 1px; overflow: hidden; clip: rect(1px, 1px, 1px, 1px);">
+                Rutinas almacenadas
+                Bases de Datos II - 3º2ª DS
+                Prof. Ing. Juan Marquez
+                
+                </div></div>
+
+        <script src="./Rutinas almacenadas - BD2_files/reveal.js.descarga"></script>
+
+        <script>
+            // More info about config & dependencies:
+            // - https://github.com/hakimel/reveal.js#configuration
+            // - https://github.com/hakimel/reveal.js#dependencies
+            Reveal.initialize({
+                controls: true,
+                progress: true,
+                center: true,
+                hash: true,
+
+                transition: 'slide', // none/fade/slide/convex/concave/zoom
+                dependencies: [
+                    { src: 'plugin/markdown/marked.js' },
+                    { src: 'plugin/markdown/markdown.js' },
+                    { src: 'plugin/notes/notes.js', async: true },
+                    { src: 'plugin/highlight/highlight.js', async: true }
+                ]
+            });
+        </script>
+    
+
+</body></html>
