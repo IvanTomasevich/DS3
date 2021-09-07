@@ -24,4 +24,3 @@ elif porcentaje>=50 and porcentaje <75:
     print("Nivel Regular.")
 else:
     print("Fuera de nivel.")
-

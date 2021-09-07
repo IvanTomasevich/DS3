@@ -7,39 +7,21 @@ menú de opciones que permita:
 4- Finalizar programa.
 """
 
-
-
-
-class Alumno:
-
+class Alumnos:
     def __init__(self):
-        self.alumno = input("Ingrese nombre alumno: ")
-        self.nota = int(input("Ingrese nota alumno: "))
-        #self.mostrar()
-        #self.aprobados()
+        self.alumno = input("Ingrese nombre del alumno: ")
+        self.nota = input("Ingrese la nota: ")
 
-    def mostrar(self):
-        print("Nombre:", self.alumno)
-        print("Nota:", self.nota)
+    def imprimir(self):
+        print("Nombre: ", self.alumno)
+        print("Nota: ", self.nota)
 
-    def aprobados(self):
-        if self.nota >= 7:
-            print("Nombre:", self.alumno)
-            print("Nota:", self.nota)
-
-
-def Menu():
-        print("Menu:")
-        print("1- Cargar alumno")
-        print("2- Mostrar alumnos")
-        print("3- Alumnos aprobados")
-        print("4- Salir")
-
-        while True:
-            menu()
-            opcionMenu = input("Ingrese una opcion: ")
-            if opcionMenu == "1":
-                alu1 = Alumno()
-                alu2 =
+"""alumnos = []
+nostas = []
+for x in range(5):
+    alumnoX = Alumnos()
+    alumnos.append(alumnoX)"""
 
 
+alumnoX = Alumnos()
+alumnoX.imprimir()
