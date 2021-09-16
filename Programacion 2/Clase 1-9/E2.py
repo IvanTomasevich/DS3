@@ -15,12 +15,28 @@ atributos valor1, valor2 y resultado se definirán en la clase padre Operacion.
 
 """
 
+
 class Operacion:
-    pass
+    def __init__(self):
+        self.cargar1 = int(input("Ingrese el primer valor: "))
+        self.cargar2 = int(input("Ingrese el segundo valor: "))
 
-class Suma:
-    def sum(self):
-        
 
-class  resta:
-    pass
+class Suma(Operacion):
+    def suma(self):
+        self.resultado = self.cargar1 + self.cargar2
+        print("La suma es " ,self.resultado)
+
+
+class Resta(Operacion):
+    def resta(self):
+        self.resultado = self.cargar1 - self.cargar2
+        print("La resta es ", self.resultado)
+
+print("-----Suma-----")
+op1 = Suma()
+op1.suma()
+
+print("-----Resta----")
+op2 = Resta()
+op2.resta()
