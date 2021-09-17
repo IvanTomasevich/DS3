@@ -5,22 +5,21 @@ services:
     restart: always
     environment:
       MYSQL_DATABASE: '2CUATRIMESTRE'
-      # So you don't have to use root, but you can if you like
+      # Usuario no root
       MYSQL_USER: 'ivan'
-      # You can use whatever password you like
+      # Password para el usuario
       MYSQL_PASSWORD: 'toor'
-      # Password for root access
+      # Password para el root
       MYSQL_ROOT_PASSWORD: 'toor'
     ports:
-      # <Port exposed> : < MySQL Port running inside container>
+      # puerto expuesto : puerto del contenedor
       - '3306:3306'
     expose:
-      # Opens port 3306 on the container
+      # abre el puerto del contenedor
       - '3306'
-      # Where our data will be persisted
-      # Opens port 3306 on the contain
+      # Donde los datos seran persistentes
     volumes:
       - my-db:/var/lib/mysql
-# Names our volume
+# Nombre del volumen
 volumes:
   my-db:
