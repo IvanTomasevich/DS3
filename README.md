@@ -1,21 +1,10 @@
 
 
-![](https://github.com/IvanTomasevich/DS3/blob/main/img/theup.jpg)# DS3
-Repo del terciario
+![](https://github.com/IvanTomasevich/DS3/blob/main/img/theup.jpg)
+# DS3 Repo del terciario
 
-Gestion de proyectos de software (Materia, promocion directa = 8)
+![](https://github.com/IvanTomasevich/DS3/blob/main/img/Horarios.png)
 
-LINK-> https://meet.google.com/gwb-rnya-hqv
 
-Programacion 2 
-
-LINK-> https://meet.google.com/zuy-xudh-pay
-
-Redes y Comunicacion
-
-LINK -> https://meet.google.com/pav-owtx-fqj
-
-Base de datos 2
-
-LINK -> https://meet.google.com/nne-qtzv-kzp
+![](https://github.com/IvanTomasevich/DS3/blob/main/img/burbujas.jpg)
 
