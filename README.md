@@ -1,4 +1,6 @@
-# DS3
+
+
+![](C:\Users\Ivan\Documents\DS3\img\theup.jpg)# DS3
 Repo del terciario
 
 Gestion de proyectos de software (Materia, promocion directa = 8)
