@@ -15,7 +15,7 @@ class App:
         self.window.title("Up and Down")
         self.window.geometry('400x200')
 
-        self.lbl = Label(self.window, text= self.var)
+        self.lbl = Label(self.window, text=self.var)
         self.lbl.grid(column=0, row=0)
 
         self.btup = Button(self.window, text="Incrementar", command=self.up)
@@ -26,13 +26,13 @@ class App:
 
         self.window.mainloop()
 
-
     def up(self):
         self.var += 1
         self.lbl.config(text=self.var)
 
     def down(self):
-        self.var -=1
+        self.var -= 1
         self.lbl.config(text=self.var)
+
 
 applicacion = App()
