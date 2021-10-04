@@ -1,6 +1,6 @@
 
 
-![](C:\Users\Ivan\Documents\DS3\img\theup.jpg)# DS3
+![](https://github.com/IvanTomasevich/DS3/blob/main/img/theup.jpg)# DS3
 Repo del terciario
 
 Gestion de proyectos de software (Materia, promocion directa = 8)
