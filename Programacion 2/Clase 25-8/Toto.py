@@ -1,5 +1,1 @@
-print("Hola mostro!!")
-hijo=input("¿Como te llamas?\n")
-print("Hola ",hijo,"\n¿Y tu papa?")
-papa= input("¿Como se llama?\n")
-print("Es alto papa ",papa,"!!")
+

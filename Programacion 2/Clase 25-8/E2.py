@@ -9,26 +9,33 @@ Debe mostrar un menú con las siguientes opciones:
 5- Finalizar programa.
 """
 import os
+
+
 class Agenda:
+
     def __init__(self):
         self.contactos = {}
-    def addContact(self): # carga contacto
+
+    def add_contact(self):  # carga contacto
         print()
-        print("Igrese un contacto")
+        print("Ingrese un contacto")
         nombre = input("Nombre: ")
         telefono = input("Telefono: ")
         email = input("Email: ")
-        self.contactos[nombre] = telefono , email
-    def printAgenda(self): # imprime agenda completa
-        print(self.contactos )
+        self.contactos[nombre] = telefono, email
 
-    def consultaName(self): # consulta si existe un nombre
+    def print_agenda(self):  # imprime agenda completa
+
+        print(self.contactos)
+
+    def consulta_name(self):  # consulta si existe un nombre
         nombre = input("Consulatar el nombre: ")
         if nombre in self.contactos:
             print(f"Ya existe {nombre} en los contactos")
         else:
             print(f"El contacto {nombre} no existe")
-    def modCelEmail(self):
+
+    def mod_cel_email(self):
         nombre = input("Nombre del contacto para actualizar: ")
         if nombre not in self.contactos:
             print(f"No existe {nombre} en los contactos")
@@ -36,7 +43,9 @@ class Agenda:
             telefono = input("Nuevo Telefono: ")
             email = input("Nuevo Email: ")
             self.contactos[nombre] = telefono, email
-def Menu():
+
+
+def menu():
     print()
     print("#####    Menus de inicio     #####")
     print("#                                #")
@@ -49,23 +58,26 @@ def Menu():
     print("Modifica Cel Email _ (4)")
     print("Para salir oprima __ (5)")
     print()
+
+
 AG = Agenda()
+
 while True:
-    Menu()
-    opcionMenu = input("    Ingresa tu opcion: ")
-    if opcionMenu == "1":
+    menu()
+    opcion_menu = input("    Ingresa tu opcion: ")
+    if opcion_menu == "1":
         os.system("cls")
-        AG.addContact()
-    elif opcionMenu == "2":
+        AG.add_contact()
+    elif opcion_menu == "2":
         os.system("cls")
-        AG.printAgenda()
-    elif opcionMenu == "3":
+        AG.print_agenda()
+    elif opcion_menu == "3":
         os.system("cls")
-        AG.consultaName()
-    elif opcionMenu == "4":
+        AG.consulta_name()
+    elif opcion_menu == "4":
         os.system("cls")
-        AG.modCelEmail()
-    elif opcionMenu == "5":
+        AG.mod_cel_email()
+    elif opcion_menu == "5":
         os.system("cls")
         print()
         print("Gracias!")

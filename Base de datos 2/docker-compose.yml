@@ -1,0 +1,25 @@
+version: '3.3'
+services:
+  db:
+    image: mysql:8.0.26
+    restart: always
+    environment:
+      MYSQL_DATABASE: 'nikoDB'
+      # Usuario no root
+      MYSQL_USER: 'niko'
+      # Password para el usuario
+      MYSQL_PASSWORD: 'toor'
+      # Password para el root
+      MYSQL_ROOT_PASSWORD: 'aaaa'
+    ports:
+      # puerto expuesto : puerto del contenedor
+      - '3307:3306'
+    expose:
+      # abre el puerto del contenedor
+      - '3306'
+      # Donde los datos seran persistentes
+    volumes:
+      - my-db:/var/lib/mysql
+# Nombre del volumen
+volumes:
+  my-db:
